@@ -54,8 +54,10 @@ public:
     void InitSetList(list<set<uint64_t> >& _setList){
         elementCount = 0;
         setList = _setList;
-        for (set<uint64_t> mSet : setList){
-            for (uint64_t element : mSet){
+        for (list<set<uint64_t> >::iterator listIter = _setList.begin(); listIter != _setList.end(); ++listIter){
+            set<uint64_t> mSet = *listIter;
+            for (set<uint64_t>::iterator setIter = mSet.begin(); setIter != mSet.end(); ++setIter){
+                uint64_t element = *setIter;
                 unordered_set<uint64_t>::const_iterator got = elementArray.find(element);
                 if ( got == elementArray.end() ){
                     elementArray.insert(element);
@@ -66,28 +68,28 @@ public:
     }
     
     void Hit(uint64_t element){
-        for(auto i = setList.begin(); i != setList.end();)
+        for(list<set<uint64_t> >::iterator listIter = setList.begin(); listIter != setList.end();)
         {
-            std::set<uint64_t>::iterator got = i->find(element);
-            if(got != i->end()){//hit
-                i = setList.erase(i);
+            std::set<uint64_t>::iterator got = listIter->find(element);
+            if(got != listIter->end()){//hit
+                listIter = setList.erase(listIter);
             }
             else{
-                ++i;
+                ++listIter;
             }
         }
         elementArray.erase(element);
         for (uint64_t e : elementArray){
             bool valid = false;
-            for(auto i = setList.begin(); i != setList.end();)
+            for(list<set<uint64_t> >::iterator listIter = setList.begin(); listIter != setList.end();)
             {
-                std::set<uint64_t>::iterator got = i->find(e);
-                if(got != i->end()){//hit
+                std::set<uint64_t>::iterator got = listIter->find(e);
+                if(got != listIter->end()){//hit
                     valid = true;
                     break;
                 }
                 else{
-                    ++i;
+                    ++listIter;
                 }
             }
             if (!valid) elementArray.erase(e);

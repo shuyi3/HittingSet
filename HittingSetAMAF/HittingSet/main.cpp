@@ -14,8 +14,6 @@
 #include <sstream>
 #include <tr1/unordered_map>
 #include <tr1/random>
-//#include <unordered_map>
-//#include <random>
 #include <time.h>
 #include<dirent.h>
 
@@ -104,17 +102,13 @@ int nested (HSState p, int level, list<Move>& Moves)
     while (!p.IsAllHit())
     {
         int bestScore = std::numeric_limits<int>::max();
-//        Move bestMove = *p.elementArray.begin();
         list<Move> bestMoves;
-//        cout<<"begin: "<<level<<endl;
 //        for (Move move : p.elementArray) // try move
         for (unordered_map<uint64_t, AMAFStats>::iterator it = AMAFtable.begin(); it != AMAFtable.end(); ++it) // try move
         {
             if (it->second.numVisit != 0) {
                 continue;
             }
-//            if (level == 2)
-//                cout<<"move: "<<it->first<<" level="<<level<<endl;
             Move move = it->first;
             int score;
             list<Move> sampledMove = playedMoves;
@@ -128,10 +122,8 @@ int nested (HSState p, int level, list<Move>& Moves)
             sampledMove.push_front(move);
             if (score < bestScore)
             {
-//                bestMove = move;
                 bestScore = score;                //update move seq
                 bestMoves = sampledMove;
-//                cout<<endl;
             }
             
             for (Move move : sampledMove){
@@ -143,72 +135,32 @@ int nested (HSState p, int level, list<Move>& Moves)
             }
         }
         
-//        if (level == 2){
-//            cout<<"table"<<endl;
-//            for (unordered_map<uint64_t, AMAFStats>::iterator it = AMAFtable.begin(); it != AMAFtable.end(); ++it)
-//            {
-//                cout<<"m:"<<it->first<<","<<it->second.bestScore<<",v:"<<it->second.numVisit<<endl;
-//            }
-//        }
-        
-//        if (level == 2)
-//            cout<<"array"<<endl;
         AMAFStats bestMoveStats = AMAFtable[*p.elementArray.begin()];
         Move bestMove = *p.elementArray.begin();
         for (Move element : p.elementArray){
-//        for (unordered_map<uint64_t, AMAFStats>::iterator it = AMAFtable.begin(); it != AMAFtable.end(); ++it){
-            
-//            cout<<"m:"<<it->first<<","<<it->second.bestScore<<",v:"<<it->second.numVisit<<endl;
             AMAFStats moveStats = AMAFtable[element];
-//            if (level == 2)
-//                cout<<"m:"<<element<<","<<moveStats.bestScore<<",v:"<<moveStats.numVisit<<endl;
-            
             if (moveStats.bestScore < bestMoveStats.bestScore){
                 bestMove = element;
                 bestMoveStats = moveStats;
-//                cout<<"best:"<<bestMove<<endl;
             }else if (moveStats.bestScore == bestMoveStats.bestScore){
                 if ((float)(moveStats.totalScore/moveStats.numVisit) < (float)(bestMoveStats.totalScore/bestMoveStats.numVisit)){
                     bestMove = element;
                     bestMoveStats = moveStats;
-//                    cout<<"best:"<<bestMove<<endl;
                 }
             }
         }
-//        if (level == 2)
-//            cout<<"best:"<<bestMove<<endl;
+
         if (bestScore < bestGlobalScore)
         {
             bestGlobalScore = bestScore;
             Moves = bestMoves;
         }
-//        cout<<"final: ";
         p = play (p, bestMove);
         playedMoves.push_back(bestMove);
-//        cout<<"play:"<<bestMove<<" hit:"<<p.setList.size()<<endl;
     }
     assert(bestGlobalScore < std::numeric_limits<int>::max());
     return bestGlobalScore;
 }
-
-//int iterativeSampleStatistics()
-//{
-//    const int DEPTH = 60;
-//    const int TRIES = 10000;
-//    std::map<int, int> m;
-//    const position p(DEPTH, 0);
-//    
-//    for (int n = 0; n < TRIES; ++n)
-//    {
-//        int count = sample(p);
-//        ++m[count];
-//    }
-//    
-//    for (auto p : m)
-//        std::cout << p.first << " generated " << p.second << " times\n";
-//    
-//    return 0;
-//}
 
 int nmcStatistics(int level, int tries, HSState& initState)
 {

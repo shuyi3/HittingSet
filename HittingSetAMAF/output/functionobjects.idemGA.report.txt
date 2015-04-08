@@ -1,0 +1,245 @@
+---------------------------------------------------------------
+>>> ========= '/SingleSource/Benchmarks/Adobe-C++/functionobjects' Program
+---------------------------------------------------------------
+Sets:
+37982896 38008864 38009840 38010256 Sets:
+38093904 38094576 38017088 38017360 38019312 38096784 38118736 38119280 38120848 Sets:
+38078784 38079456 38134832 38135104 38137056 38137600 Sets:
+38189904 38192624 38194384 38194384 38194784 Sets:
+38149520 38152240 38154000 38154000 38154400 Sets:
+38063536 38064080 38069584 38069856 38271776 38272048 38275984 38276256 38280160 38280432 38284368 38284640 38288544 38288816 38262560 38262832 38266736 38267008 38311456 38311728 38315632 38315904 38319808 38320080 38323984 38324256 38103472 Sets:
+38202064 38203184 38203728 Sets:
+38211344 38213936 38215696 38215696 38216096 Sets:
+38230080 38231296 38233568 38235328 38235328 38235728 Sets:
+38249456 38250672 38252944 38254704 38254704 38255104 Sets:
+38487040 38488256 38490528 38492288 38492288 38492688 Sets:
+38507376 38509904 38511136 38511664 38511664 38512064 Sets:
+38525088 Sets:
+38540096 38542320 Sets:
+38362864 Sets:
+38365856 38367216 38367216 38367488 38367904 38368432 Sets:
+38410480 38411024 38412400 38414208 Sets:
+38420912 38420912 38421312 Sets:
+38427248 Sets:
+38431344 Sets:
+38435424 Sets:
+38442160 38444096 38445296 38445296 38445568 38447712 38448928 38448928 38449344 Sets:
+38458400 38458400 38458672 38458672 38459232 38460032 38460032 Sets:
+38469008 Sets:
+38545408 Sets:
+38562144 Sets:
+38567360 Sets:
+38570080 38570768 38571936 38571936 38572208 38572624 38573152 Sets:
+38599440 38599984 38601168 38602976 Sets:
+38609936 Sets:
+38614416 Sets:
+38618864 Sets:
+38626128 38627872 38629072 38629072 38629344 38294848 38296064 38296064 38296480 Sets:
+38305488 38305488 38305760 38305760 38306320 38307120 Sets:
+38653088 Sets:
+38660352 Sets:
+38677088 Sets:
+38682304 Sets:
+38685024 38685712 38686880 38686880 38687152 38687568 38688096 Sets:
+38714592 38715136 38716320 38718128 Sets:
+38725088 Sets:
+38729568 Sets:
+38734016 Sets:
+38741280 38743024 38744224 38744224 38744496 38746640 38747856 38747856 38748272 Sets:
+38757296 38757296 38757568 38757568 38758128 38758928 Sets:
+38768240 Sets:
+38775504 Sets:
+38792240 Sets:
+38797456 Sets:
+38800176 38800864 38802032 38802032 38802304 38802720 38803248 Sets:
+38826912 38827456 38828640 38830448 Sets:
+38837408 Sets:
+38841888 Sets:
+38846336 Sets:
+38853600 38855344 38856544 38856544 38856816 38858960 38860176 38860176 38860592 Sets:
+38869600 38869600 38869872 38869872 38870432 38871232 Sets:
+38880544 Sets:
+38887792 Sets:
+38905184 Sets:
+38910672 Sets:
+38914320 38915840 38915840 38916112 38916528 Sets:
+38944000 38944544 38946080 38947888 Sets:
+38955984 Sets:
+38960480 Sets:
+38965184 Sets:
+38972720 38974816 38976016 38976016 38976288 38978432 38979648 38979648 38980064 Sets:
+38989824 38989824 38990096 38990096 38990656 38991456 Sets:
+39001040 
+===-------------------------------------------------------------------------===
+                          ... Statistics Collected ...
+===-------------------------------------------------------------------------===
+
+ 4349 asm-printer     - Number of machine instrs printed
+   48 branchfolding   - Number of block tails merged
+   10 branchfolding   - Number of branches optimized
+   62 branchfolding   - Number of dead blocks removed
+   75 code-placement  - Number of intra loop branches eliminated
+   29 code-placement  - Number of intra loop branches moved
+   91 code-placement  - Number of loops aligned
+   29 codegen-dce     - Number of dead instructions deleted
+   12 codegenprepare  - Number of GEPs converted to casts
+   90 codegenprepare  - Number of blocks eliminated
+ 1596 dagcombine      - Number of dag nodes combined
+  621 isel            - Number of blocks selected using DAG
+26555 isel            - Number of times dag isel has to try another path
+   11 loop-simplify   - Number of pre-header or exit blocks inserted
+   10 machine-licm    - Number of hoisted machine instructions CSEed
+   39 machine-licm    - Number of instructions hoisted in low reg pressure situation
+   50 machine-licm    - Number of machine instructions hoisted out of loops
+ 5224 pei             - Number of bytes used for stack in all functions
+    7 phielim         - Number of atomic phis lowered
+    2 pre-RA-sched    - Number of loads clustered together
+   58 regalloc        - Number of cross class joins performed
+  363 regalloc        - Number of identity moves eliminated after coalescing
+ 1053 regalloc        - Number of identity moves eliminated after rewriting
+   42 regalloc        - Number of instructions re-materialized
+   11 regalloc        - Number of interferences evicted
+  363 regalloc        - Number of interval joins performed
+   11 regalloc        - Number of new live ranges queued
+ 6892 regalloc        - Number of original intervals
+ 1842 regalloc        - Number of registers assigned
+   11 regalloc        - Number of registers unassigned
+    2 tailduplication - Additional instructions due to tail duplication
+    1 tailduplication - Number of dead blocks removed
+    2 tailduplication - Number of tail duplicated blocks
+    1 tailduplication - Number of tails duplicated
+    5 twoaddrinstr    - Number of 3-address instructions sunk
+    6 twoaddrinstr    - Number of instructions aggressively commuted
+    6 twoaddrinstr    - Number of instructions commuted to coalesce
+   49 twoaddrinstr    - Number of instructions promoted to 3-address
+   12 twoaddrinstr    - Number of instructions re-materialized
+  409 twoaddrinstr    - Number of two-address instructions
+  698 x86-codegen     - Number of floating point instructions
+   13 x86-isel        - Number of loads moved below TokenFactor
+
+===-------------------------------------------------------------------------===
+                      Instruction Selection and Scheduling
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.3678 seconds (0.3669 wall clock)
+
+   ---User Time---   --System Time--   --User+System--   ---Wall Time---  --- Name ---
+   0.0960 ( 26.4%)   0.0001 (  2.0%)   0.0961 ( 26.1%)   0.0928 ( 25.3%)  Instruction Selection
+   0.0695 ( 19.1%)   0.0000 (  0.6%)   0.0695 ( 18.9%)   0.0675 ( 18.4%)  Instruction Scheduling
+   0.0503 ( 13.8%)   0.0040 ( 95.1%)   0.0543 ( 14.8%)   0.0515 ( 14.1%)  Instruction Creation
+   0.0372 ( 10.2%)   0.0000 (  0.3%)   0.0372 ( 10.1%)   0.0421 ( 11.5%)  DAG Combining 1
+   0.0287 (  7.9%)   0.0000 (  0.4%)   0.0287 (  7.8%)   0.0281 (  7.7%)  Type Legalization
+   0.0258 (  7.1%)   0.0000 (  0.2%)   0.0259 (  7.0%)   0.0270 (  7.4%)  DAG Legalization
+   0.0273 (  7.5%)   0.0000 (  0.4%)   0.0273 (  7.4%)   0.0255 (  7.0%)  Vector Legalization
+   0.0172 (  4.7%)   0.0000 (  0.1%)   0.0173 (  4.7%)   0.0182 (  5.0%)  DAG Combining 2
+   0.0087 (  2.4%)   0.0000 (  0.1%)   0.0087 (  2.4%)   0.0094 (  2.6%)  DAG Combining after legalize types
+   0.0028 (  0.8%)   0.0000 (  0.7%)   0.0028 (  0.8%)   0.0046 (  1.3%)  Instruction Scheduling Cleanup
+   0.3636 (100.0%)   0.0042 (100.0%)   0.3678 (100.0%)   0.3669 (100.0%)  Total
+
+===-------------------------------------------------------------------------===
+                                 DWARF Emission
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.0071 seconds (0.0049 wall clock)
+
+   ---User Time---   --System Time--   --User+System--   ---Wall Time---  --- Name ---
+   0.0019 ( 74.6%)   0.0045 (100.0%)   0.0064 ( 90.8%)   0.0033 ( 67.7%)  DWARF Debug Writer
+   0.0007 ( 25.4%)   0.0000 (  0.0%)   0.0007 (  9.2%)   0.0016 ( 32.3%)  DWARF Exception Writer
+   0.0026 (100.0%)   0.0045 (100.0%)   0.0071 (100.0%)   0.0049 (100.0%)  Total
+
+===-------------------------------------------------------------------------===
+                              Register Allocation
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.0371 seconds (0.0368 wall clock)
+
+   ---User Time---   --System Time--   --User+System--   ---Wall Time---  --- Name ---
+   0.0163 ( 43.9%)   0.0000 ( 50.0%)   0.0163 ( 43.9%)   0.0160 ( 43.5%)  Seed Live Regs
+   0.0112 ( 30.2%)   0.0000 ( 50.0%)   0.0112 ( 30.2%)   0.0111 ( 30.0%)  MBB Live Ins
+   0.0087 ( 23.4%)   0.0000 (  0.0%)   0.0087 ( 23.4%)   0.0083 ( 22.4%)  Rewriter
+   0.0006 (  1.6%)   0.0000 (  0.0%)   0.0006 (  1.6%)   0.0010 (  2.7%)  Initialize
+   0.0003 (  0.9%)   0.0000 (  0.0%)   0.0003 (  0.9%)   0.0003 (  0.9%)  Evict
+   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0001 (  0.4%)  Emit Debug Info
+   0.0371 (100.0%)   0.0000 (100.0%)   0.0371 (100.0%)   0.0368 (100.0%)  Total
+
+===-------------------------------------------------------------------------===
+                      ... Pass execution timing report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 15.6051 seconds (15.6183 wall clock)
+
+   ---User Time---   --System Time--   --User+System--   ---Wall Time---  --- Name ---
+  14.3264 ( 92.3%)   0.0594 ( 67.7%)  14.3858 ( 92.2%)  14.4148 ( 92.3%)  Idempotence Analysis
+   0.5533 (  3.6%)   0.0122 ( 13.9%)   0.5655 (  3.6%)   0.5719 (  3.7%)  X86 DAG->DAG Instruction Selection
+   0.1362 (  0.9%)   0.0040 (  4.5%)   0.1402 (  0.9%)   0.1369 (  0.9%)  Live Variable Analysis
+   0.0619 (  0.4%)   0.0039 (  4.5%)   0.0658 (  0.4%)   0.0635 (  0.4%)  Greedy Register Allocator
+   0.0454 (  0.3%)   0.0000 (  0.0%)   0.0454 (  0.3%)   0.0438 (  0.3%)  Live Interval Analysis
+   0.0385 (  0.2%)   0.0079 (  9.0%)   0.0464 (  0.3%)   0.0409 (  0.3%)  X86 AT&T-Style Assembly Printer
+   0.0214 (  0.1%)   0.0000 (  0.0%)   0.0214 (  0.1%)   0.0203 (  0.1%)  Simple Register Coalescing
+   0.0169 (  0.1%)   0.0000 (  0.0%)   0.0169 (  0.1%)   0.0162 (  0.1%)  Prolog/Epilog Insertion & Frame Finalization
+   0.0155 (  0.1%)   0.0000 (  0.0%)   0.0156 (  0.1%)   0.0157 (  0.1%)  Natural Loop Information
+   0.0147 (  0.1%)   0.0000 (  0.0%)   0.0148 (  0.1%)   0.0153 (  0.1%)  Machine Function Analysis
+   0.0151 (  0.1%)   0.0000 (  0.0%)   0.0151 (  0.1%)   0.0146 (  0.1%)  Control Flow Optimizer
+   0.0141 (  0.1%)   0.0000 (  0.0%)   0.0142 (  0.1%)   0.0143 (  0.1%)  Optimize for code generation
+   0.0150 (  0.1%)   0.0000 (  0.0%)   0.0150 (  0.1%)   0.0142 (  0.1%)  Two-Address instruction pass
+   0.0150 (  0.1%)   0.0000 (  0.0%)   0.0150 (  0.1%)   0.0140 (  0.1%)  Machine Common Subexpression Elimination
+   0.0142 (  0.1%)   0.0001 (  0.1%)   0.0142 (  0.1%)   0.0135 (  0.1%)  Module Verifier
+   0.0115 (  0.1%)   0.0000 (  0.0%)   0.0115 (  0.1%)   0.0124 (  0.1%)  Module Verifier
+   0.0129 (  0.1%)   0.0000 (  0.0%)   0.0129 (  0.1%)   0.0123 (  0.1%)  Calculate spill weights
+   0.0121 (  0.1%)   0.0000 (  0.0%)   0.0121 (  0.1%)   0.0116 (  0.1%)  Machine Copy Propagation Pass
+   0.0117 (  0.1%)   0.0000 (  0.0%)   0.0117 (  0.1%)   0.0110 (  0.1%)  Machine Instruction LICM
+   0.0116 (  0.1%)   0.0000 (  0.0%)   0.0116 (  0.1%)   0.0106 (  0.1%)  Remove dead machine instructions
+   0.0099 (  0.1%)   0.0000 (  0.0%)   0.0099 (  0.1%)   0.0094 (  0.1%)  Patch Machine Idempotent Regions
+   0.0081 (  0.1%)   0.0000 (  0.0%)   0.0081 (  0.1%)   0.0086 (  0.1%)  Process Implicit Definitions
+   0.0086 (  0.1%)   0.0001 (  0.1%)   0.0087 (  0.1%)   0.0082 (  0.1%)  Dominator Tree Construction
+   0.0069 (  0.0%)   0.0000 (  0.0%)   0.0069 (  0.0%)   0.0066 (  0.0%)  MachineDominator Tree Construction
+   0.0066 (  0.0%)   0.0000 (  0.0%)   0.0066 (  0.0%)   0.0063 (  0.0%)  Slot index numbering
+   0.0067 (  0.0%)   0.0000 (  0.0%)   0.0067 (  0.0%)   0.0060 (  0.0%)  Dominator Tree Construction
+   0.0062 (  0.0%)   0.0000 (  0.0%)   0.0062 (  0.0%)   0.0059 (  0.0%)  Canonicalize natural loops
+   0.0064 (  0.0%)   0.0000 (  0.0%)   0.0064 (  0.0%)   0.0059 (  0.0%)  Execution dependency fix
+   0.0066 (  0.0%)   0.0000 (  0.0%)   0.0066 (  0.0%)   0.0055 (  0.0%)  Machine code sinking
+   0.0051 (  0.0%)   0.0000 (  0.0%)   0.0052 (  0.0%)   0.0052 (  0.0%)  Idempotent Region Construction
+   0.0051 (  0.0%)   0.0000 (  0.0%)   0.0051 (  0.0%)   0.0045 (  0.0%)  Machine Natural Loop Construction
+   0.0044 (  0.0%)   0.0000 (  0.0%)   0.0044 (  0.0%)   0.0045 (  0.0%)  Natural Loop Information
+   0.0047 (  0.0%)   0.0000 (  0.0%)   0.0047 (  0.0%)   0.0044 (  0.0%)  X86 FP Stackifier
+   0.0047 (  0.0%)   0.0000 (  0.0%)   0.0047 (  0.0%)   0.0043 (  0.0%)  MachineDominator Tree Construction
+   0.0044 (  0.0%)   0.0000 (  0.0%)   0.0044 (  0.0%)   0.0043 (  0.0%)  Branch Probability Analysis
+   0.0041 (  0.0%)   0.0000 (  0.0%)   0.0041 (  0.0%)   0.0036 (  0.0%)  Code Placement Optimizer
+   0.0035 (  0.0%)   0.0000 (  0.0%)   0.0035 (  0.0%)   0.0035 (  0.0%)  Loop Strength Reduction
+   0.0044 (  0.0%)   0.0000 (  0.0%)   0.0044 (  0.0%)   0.0035 (  0.0%)  Machine Instruction LICM
+   0.0034 (  0.0%)   0.0000 (  0.0%)   0.0034 (  0.0%)   0.0034 (  0.0%)  Debug Variable Analysis
+   0.0027 (  0.0%)   0.0000 (  0.0%)   0.0027 (  0.0%)   0.0032 (  0.0%)  Tail Duplication
+   0.0021 (  0.0%)   0.0000 (  0.0%)   0.0021 (  0.0%)   0.0030 (  0.0%)  Basic Alias Analysis (stateless AA impl)
+   0.0026 (  0.0%)   0.0000 (  0.0%)   0.0027 (  0.0%)   0.0030 (  0.0%)  Canonicalize natural loops
+   0.0024 (  0.0%)   0.0000 (  0.0%)   0.0024 (  0.0%)   0.0030 (  0.0%)  Machine Idempotent Regions
+   0.0031 (  0.0%)   0.0000 (  0.0%)   0.0031 (  0.0%)   0.0028 (  0.0%)  Machine Natural Loop Construction
+   0.0031 (  0.0%)   0.0000 (  0.0%)   0.0031 (  0.0%)   0.0027 (  0.0%)  Peephole Optimizations
+   0.0024 (  0.0%)   0.0000 (  0.0%)   0.0024 (  0.0%)   0.0026 (  0.0%)  Remove unreachable blocks from the CFG
+   0.0021 (  0.0%)   0.0000 (  0.0%)   0.0021 (  0.0%)   0.0024 (  0.0%)  Machine Idempotent Regions
+   0.0024 (  0.0%)   0.0000 (  0.0%)   0.0024 (  0.0%)   0.0021 (  0.0%)  Remove unreachable machine basic blocks
+   0.0023 (  0.0%)   0.0000 (  0.0%)   0.0023 (  0.0%)   0.0020 (  0.0%)  Machine Natural Loop Construction
+   0.0016 (  0.0%)   0.0000 (  0.0%)   0.0016 (  0.0%)   0.0018 (  0.0%)  Eliminate PHI nodes for register allocation
+   0.0016 (  0.0%)   0.0000 (  0.0%)   0.0016 (  0.0%)   0.0015 (  0.0%)  Post-RA pseudo instruction expansion pass
+   0.0017 (  0.0%)   0.0000 (  0.0%)   0.0017 (  0.0%)   0.0014 (  0.0%)  Tail Duplication
+   0.0013 (  0.0%)   0.0000 (  0.0%)   0.0013 (  0.0%)   0.0013 (  0.0%)  Bundle Machine CFG Edges
+   0.0013 (  0.0%)   0.0000 (  0.0%)   0.0013 (  0.0%)   0.0013 (  0.0%)  Virtual Register Map
+   0.0010 (  0.0%)   0.0000 (  0.0%)   0.0010 (  0.0%)   0.0012 (  0.0%)  Expand ISel Pseudo-instructions
+   0.0011 (  0.0%)   0.0000 (  0.0%)   0.0011 (  0.0%)   0.0012 (  0.0%)  Spill Code Placement Analysis
+   0.0013 (  0.0%)   0.0000 (  0.0%)   0.0013 (  0.0%)   0.0011 (  0.0%)  Post RA top-down list latency scheduler
+   0.0011 (  0.0%)   0.0000 (  0.0%)   0.0011 (  0.0%)   0.0011 (  0.0%)  Scalar Evolution Analysis
+   0.0006 (  0.0%)   0.0000 (  0.0%)   0.0006 (  0.0%)   0.0011 (  0.0%)  No Alias Analysis (always returns 'may' alias)
+   0.0008 (  0.0%)   0.0000 (  0.0%)   0.0008 (  0.0%)   0.0010 (  0.0%)  Bundle Machine CFG Edges
+   0.0006 (  0.0%)   0.0000 (  0.0%)   0.0006 (  0.0%)   0.0008 (  0.0%)  Exception handling preparation
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0007 (  0.0%)  Induction Variable Users
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0007 (  0.0%)  Preliminary module verification
+   0.0006 (  0.0%)   0.0000 (  0.0%)   0.0006 (  0.0%)   0.0007 (  0.0%)  Insert stack protectors
+   0.0007 (  0.0%)   0.0000 (  0.0%)   0.0007 (  0.0%)   0.0006 (  0.0%)  Optimize machine instruction PHIs
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0005 (  0.0%)  Live Stack Slot Analysis
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0004 (  0.0%)  X86 Maximal Stack Alignment Check
+   0.0003 (  0.0%)   0.0000 (  0.0%)   0.0003 (  0.0%)   0.0004 (  0.0%)  Stack Slot Coloring
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0004 (  0.0%)  Analyze Machine Code For Garbage Collection
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0003 (  0.0%)  Local Stack Slot Allocation
+   0.0002 (  0.0%)   0.0000 (  0.0%)   0.0002 (  0.0%)   0.0003 (  0.0%)  Lower Garbage Collection Instructions
+   0.0004 (  0.0%)   0.0000 (  0.0%)   0.0004 (  0.0%)   0.0003 (  0.0%)  Preliminary module verification
+   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0002 (  0.0%)  Delete Garbage Collector Information
+   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0001 (  0.0%)  Create Garbage Collector Module Metadata
+   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)  Target Library Information
+   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)   0.0000 (  0.0%)  Machine Module Information
+  15.5173 (100.0%)   0.0878 (100.0%)  15.6051 (100.0%)  15.6183 (100.0%)  Total
+

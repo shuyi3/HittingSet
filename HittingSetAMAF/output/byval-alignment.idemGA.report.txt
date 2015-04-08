@@ -1,0 +1,29 @@
+---------------------------------------------------------------
+>>> ========= '/SingleSource/UnitTests/byval-alignment' Program
+---------------------------------------------------------------
+Sets:
+45998960 45999632 llc: X86FloatingPoint.cpp:1651: void {anonymous}::FPS::handleSpecialFP(llvm::MachineBasicBlock::iterator&): Assertion `StackTop == 0 && "x87 FP is broken; use x86-64 w/o 80-bit FP if you can"' failed.
+0  llc             0x00000000014be776
+1  llc             0x00000000014be572
+2  libpthread.so.0 0x00002b11d674dcb0
+3  libc.so.6       0x00002b11d73a70d5 gsignal + 53
+4  libc.so.6       0x00002b11d73aa83b abort + 379
+5  libc.so.6       0x00002b11d739fd9e
+6  libc.so.6       0x00002b11d739fe42
+7  llc             0x0000000000c71c18
+8  llc             0x0000000000c6dc71
+9  llc             0x0000000000c6d5fc
+10 llc             0x0000000000fdc0d5 llvm::MachineFunctionPass::runOnFunction(llvm::Function&) + 95
+11 llc             0x000000000144b3ab llvm::FPPassManager::runOnFunction(llvm::Function&) + 429
+12 llc             0x000000000144b5ef llvm::FPPassManager::runOnModule(llvm::Module&) + 107
+13 llc             0x000000000144b932 llvm::MPPassManager::runOnModule(llvm::Module&) + 456
+14 llc             0x000000000144be28 llvm::PassManagerImpl::run(llvm::Module&) + 130
+15 llc             0x000000000144c21b llvm::PassManager::run(llvm::Module&) + 39
+16 llc             0x0000000000844d5e main + 3581
+17 libc.so.6       0x00002b11d739276d __libc_start_main + 237
+18 llc             0x00000000008438b9
+Stack dump:
+0.	Program arguments: /home/shuyi/llvm-root/llvm/Debug+Asserts/bin/llc -idempotence-construction=size -idempotence-GA=true -stats -time-passes Output/byval-alignment.linked.rbc -o Output/byval-alignment.linked.rbc.s 
+1.	Running pass 'Function Pass Manager' on module 'Output/byval-alignment.linked.rbc'.
+2.	Running pass 'X86 FP Stackifier' on function '@f0'
+Aborted (core dumped)

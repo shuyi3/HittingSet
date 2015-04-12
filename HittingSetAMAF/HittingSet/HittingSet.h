@@ -13,7 +13,7 @@
 #include <list>
 #include <set>
 //#include <unordered_set>
-#include <tr1/unordered_set>
+#include <tr1/unordered_map>
 #include <vector>
 
 #include <iostream>
@@ -28,8 +28,9 @@ public:
     int bestScore;
     int numVisit;
     int totalScore;
+    int hitScore;
 
-    AMAFStats():bestScore(std::numeric_limits<int>::max()), numVisit(0), totalScore(0){}
+    AMAFStats():bestScore(std::numeric_limits<int>::max()), numVisit(0), totalScore(0), hitScore(std::numeric_limits<int>::max()){}
     
 };
 
@@ -47,7 +48,7 @@ public:
     }
     
     list<set<uint64_t> > setList;
-    unordered_set<uint64_t> elementArray;
+    unordered_map<uint64_t,int> elementArray;
     int elementCount;
     int score;
     
@@ -58,43 +59,58 @@ public:
             set<uint64_t> mSet = *listIter;
             for (set<uint64_t>::iterator setIter = mSet.begin(); setIter != mSet.end(); ++setIter){
                 uint64_t element = *setIter;
-                unordered_set<uint64_t>::const_iterator got = elementArray.find(element);
+                unordered_map<uint64_t,int>::const_iterator got = elementArray.find(element);
                 if ( got == elementArray.end() ){
-                    elementArray.insert(element);
+                    elementArray.insert(make_pair(element,1));
                     ++elementCount;
-                }//else find
+                }else{//else find
+                    elementArray[element]++;
+                }
             }
         }
     }
     
-    void Hit(uint64_t element){
+    int Hit(uint64_t element){
+//        cout<<"hit:"<<element<<endl;
+        int hitScore = 0;
         for(list<set<uint64_t> >::iterator listIter = setList.begin(); listIter != setList.end();)
         {
             std::set<uint64_t>::iterator got = listIter->find(element);
             if(got != listIter->end()){//hit
+                set<uint64_t> mSet = *listIter;
+                for (set<uint64_t>::iterator elementIter = mSet.begin(); elementIter != mSet.end(); ++elementIter){
+                    elementArray[*elementIter]--;
+                    if (elementArray[*elementIter] == 0){
+//                        cout<<"erase:"<<*elementIter<<endl;
+                        elementArray.erase(*elementIter);
+                    }
+                }
+
                 listIter = setList.erase(listIter);
+                hitScore++;
             }
             else{
                 ++listIter;
             }
         }
         elementArray.erase(element);
-        for (uint64_t e : elementArray){
-            bool valid = false;
-            for(list<set<uint64_t> >::iterator listIter = setList.begin(); listIter != setList.end();)
-            {
-                std::set<uint64_t>::iterator got = listIter->find(e);
-                if(got != listIter->end()){//hit
-                    valid = true;
-                    break;
-                }
-                else{
-                    ++listIter;
-                }
-            }
-            if (!valid) elementArray.erase(e);
-        }
+//        for (uint64_t e : elementArray){
+//            bool valid = false;
+//            for(list<set<uint64_t> >::iterator listIter = setList.begin(); listIter != setList.end();)
+//            {
+//                std::set<uint64_t>::iterator got = listIter->find(e);
+//                if(got != listIter->end()){//hit
+//                    valid = true;
+//                    break;
+//                }
+//                else{
+//                    ++listIter;
+//                }
+//            }
+//            if (!valid) elementArray.erase(e);
+//        }
         ++score;
+        return hitScore;
     }
     
     bool IsAllHit(){

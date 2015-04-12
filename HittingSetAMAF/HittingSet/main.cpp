@@ -58,6 +58,11 @@ Iter select_randomly(Iter start, Iter end) {
     return select_randomly(start, end, gen);
 }
 
+bool cmp(std::pair<Move,int> const & a, std::pair<Move,int> const & b)
+{
+    return a.second > b.second;
+}
+
 HSState play(HSState p, Move element)
 {
     assert(p.elementCount > 0);
@@ -77,7 +82,7 @@ int sample(HSState p, list<Move>& playedMoves)
 //        std::advance(item, RandIndex);
 //        Move element = *item;
         
-        Move element = *select_randomly(p.elementArray.begin(), p.elementArray.end());
+        Move element = (*select_randomly(p.elementArray.begin(), p.elementArray.end())).first;
 //        cout<<"element: "<<element<<endl;
         p.Hit(element);
         playedMoves.push_back(element);
@@ -91,7 +96,7 @@ int nested (HSState p, int level, list<Move>& Moves)
     
     unordered_map<uint64_t, AMAFStats> AMAFtable;
     for ( auto it = p.elementArray.begin(); it != p.elementArray.end(); ++it ){
-        uint64_t key = *it;
+        uint64_t key = (*it).first;
         AMAFtable.insert(make_pair(key, AMAFStats()));
     }
     
@@ -103,20 +108,30 @@ int nested (HSState p, int level, list<Move>& Moves)
     {
         int bestScore = std::numeric_limits<int>::max();
         list<Move> bestMoves;
-//        for (Move move : p.elementArray) // try move
-        for (unordered_map<uint64_t, AMAFStats>::iterator it = AMAFtable.begin(); it != AMAFtable.end(); ++it) // try move
+        
+        std::vector<std::pair<Move,int> > items(p.elementArray.size());
+        copy(p.elementArray.begin(), p.elementArray.end(), items.begin());
+        std::sort(items.begin(), items.end(), cmp);
+        
+        for (std::vector<pair<Move,int> >::iterator it = items.begin(); it !=items.end(); ++it) // try move
+//        for (unordered_map<uint64_t, AMAFStats>::iterator it = AMAFtable.begin(); it != AMAFtable.end(); ++it) // try move
         {
-            if (it->second.numVisit != 0) {
+            Move move = it->first;
+            if (AMAFtable[move].numVisit != 0) {
                 continue;
             }
-            Move move = it->first;
             int score;
+            int hitScore;
             list<Move> sampledMove = playedMoves;
             if (level == 1){
-                score = sample(play(p, move), sampledMove);
+                HSState after = HSState(p);
+                hitScore = after.Hit(move);
+                score = sample(after, sampledMove);
             }
             else{
-                score = nested(play(p, move), level - 1, sampledMove);
+                HSState after = HSState(p);
+                hitScore = after.Hit(move);
+                score = nested(after, level - 1, sampledMove);
             }
             
             sampledMove.push_front(move);
@@ -125,6 +140,10 @@ int nested (HSState p, int level, list<Move>& Moves)
                 bestScore = score;                //update move seq
                 bestMoves = sampledMove;
             }
+            
+            AMAFtable[move].hitScore = hitScore;
+            
+            cout<<"move: "<<move<<" hs:"<<hitScore<<endl;
             
             for (Move move : sampledMove){
                 if (score < AMAFtable[move].bestScore){
@@ -135,18 +154,37 @@ int nested (HSState p, int level, list<Move>& Moves)
             }
         }
         
-        AMAFStats bestMoveStats = AMAFtable[*p.elementArray.begin()];
-        Move bestMove = *p.elementArray.begin();
-        for (Move element : p.elementArray){
-            AMAFStats moveStats = AMAFtable[element];
+        AMAFStats bestMoveStats = AMAFtable[(*p.elementArray.begin()).first];
+        Move bestMove = (*p.elementArray.begin()).first;
+        for (pair<Move, int> element : p.elementArray){
+            AMAFStats moveStats = AMAFtable[element.first];
+            
+//            if (moveStats.hitScore < bestMoveStats.hitScore){
+//                bestMove = element;
+//                bestMoveStats = moveStats;
+//            }else if (moveStats.hitScore == bestMoveStats.hitScore){
+//                if (moveStats.bestScore < bestMoveStats.bestScore){
+//                    bestMove = element;
+//                    bestMoveStats = moveStats;
+//                }
+//            }
+            
             if (moveStats.bestScore < bestMoveStats.bestScore){
-                bestMove = element;
+                bestMove = element.first;
                 bestMoveStats = moveStats;
             }else if (moveStats.bestScore == bestMoveStats.bestScore){
-                if ((float)(moveStats.totalScore/moveStats.numVisit) < (float)(bestMoveStats.totalScore/bestMoveStats.numVisit)){
-                    bestMove = element;
+//                if ((float)(moveStats.totalScore/moveStats.numVisit) < (float)(bestMoveStats.totalScore/bestMoveStats.numVisit)){
+//                    bestMove = element;
+//                    bestMoveStats = moveStats;
+//                }
+                if (moveStats.hitScore < bestMoveStats.hitScore){
+                    bestMove = element.first;
                     bestMoveStats = moveStats;
                 }
+//                if (moveStats.numVisit > bestMoveStats.numVisit){
+//                    bestMove = element;
+//                    bestMoveStats = moveStats;
+//                }
             }
         }
 
@@ -155,6 +193,7 @@ int nested (HSState p, int level, list<Move>& Moves)
             bestGlobalScore = bestScore;
             Moves = bestMoves;
         }
+        
         p = play (p, bestMove);
         playedMoves.push_back(bestMove);
     }
@@ -210,57 +249,63 @@ int main()
 //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/fftbench.idemGA.report.txt");
 //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/lpbench.idemGA.report.txt");
 
-    std::string str;
-    bool beginParse = false;
-    while (std::getline(file, str))
-    {
-        if (std::strncmp("===", str.c_str(), 3) == 0){
-            break;
-        }
-        
-        if (beginParse){
-            
-            set<uint64_t> mSet;
-            
-            stringstream ssin(str);
-            while (ssin.good()){
-                uint64_t element;
-                ssin >> element;
-                if (element == 0) break;
-                mSet.insert(element);
-            }
-            
-            if (!mSet.empty())
-                mSetList.push_back(mSet);
-
-        }
-        if (std::strncmp("Sets:", str.c_str(), 4) == 0){
-            //begin
-            beginParse = true;
-        }
-    }
+//    std::string str;
+//    bool beginParse = false;
+//    while (std::getline(file, str))
+//    {
+//        if (std::strncmp("===", str.c_str(), 3) == 0){
+//            break;
+//        }
+//        
+//        if (beginParse){
+//            
+//            set<uint64_t> mSet;
+//            
+//            stringstream ssin(str);
+//            while (ssin.good()){
+//                uint64_t element;
+//                ssin >> element;
+//                if (element == 0) break;
+//                mSet.insert(element);
+//            }
+//            
+//            if (!mSet.empty())
+//                mSetList.push_back(mSet);
+//
+//        }
+//        if (std::strncmp("Sets:", str.c_str(), 4) == 0){
+//            //begin
+//            beginParse = true;
+//        }
+//    }
     
 
     
 //    set<uint64_t> s1,s2,s3,s4,s5;
     
+    uint64_t a1[] = {5, 7, 8, 9, 10};
+    uint64_t a2[] = {5, 7};
+    uint64_t a3[] = {1, 3, 6, 10};
+    uint64_t a4[] = {4, 6, 7, 9, 10};
+    uint64_t a5[] = {1, 2, 8, 10};
+    
 //    uint64_t a1[] = {5, 7, 8, 9, 10};
-//    uint64_t a2[] = {5, 7};
-//    uint64_t a3[] = {1, 3, 6, 10};
-//    uint64_t a4[] = {4, 6, 7, 9, 10};
-//    uint64_t a5[] = {1, 2, 8, 10};
-//
-//    set<uint64_t> s1(a1, a1+5);
-//    set<uint64_t> s2(a2, a2+2);
-//    set<uint64_t> s3(a3, a3+4);
-//    set<uint64_t> s4(a4, a4+5);
-//    set<uint64_t> s5(a5, a5+4);
-//
-//    mSetList.push_back(s1);
-//    mSetList.push_back(s2);
-//    mSetList.push_back(s3);
-//    mSetList.push_back(s4);
-//    mSetList.push_back(s5);
+//    uint64_t a2[] = {3, 7};
+//    uint64_t a3[] = {5, 3, 6, 10};
+//    uint64_t a4[] = {5, 6, 7, 9, 10};
+//    uint64_t a5[] = {1, 2, 8, 3};
+
+    set<uint64_t> s1(a1, a1+5);
+    set<uint64_t> s2(a2, a2+2);
+    set<uint64_t> s3(a3, a3+4);
+    set<uint64_t> s4(a4, a4+5);
+    set<uint64_t> s5(a5, a5+4);
+
+    mSetList.push_back(s1);
+    mSetList.push_back(s2);
+    mSetList.push_back(s3);
+    mSetList.push_back(s4);
+    mSetList.push_back(s5);
 
 //    mSetList = {s1, s2, s3, s4, s5};
     
@@ -283,69 +328,70 @@ int main()
     
     cout<<"number of elements:"<<newState.elementArray.size()<<endl;
     
+    nmcStatistics(1, 1000, newState);
     
-    DIR *dir;
-    struct dirent *ent;
-    string dirName = "/Users/shuyi/Documents/CMPUT657/HittingSet/output/";
-    if ((dir = opendir (dirName.c_str())) != NULL) {
-        /* print all the files and directories within directory */
-        while ((ent = readdir (dir)) != NULL) {
-            
-            list<set<uint64_t> > mSetList;
-            
-            string fileName(ent->d_name);
-            string dirName = "/Users/shuyi/Documents/CMPUT657/HittingSet/output/";
-            dirName.append(fileName);
-            
-            std::ifstream file(dirName.c_str());
-            //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/fftbench.idemGA.report.txt");
-            //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/lpbench.idemGA.report.txt");
-            
-            std::string str;
-            bool beginParse = false;
-            while (std::getline(file, str))
-            {
-                if (std::strncmp("===", str.c_str(), 3) == 0){
-                    break;
-                }
-                
-                if (beginParse){
-                    
-                    set<uint64_t> mSet;
-                    
-                    stringstream ssin(str);
-                    while (ssin.good()){
-                        uint64_t element;
-                        ssin >> element;
-                        if (element == 0) break;
-                        mSet.insert(element);
-                    }
-                    
-                    if (!mSet.empty())
-                        mSetList.push_back(mSet);
-                    
-                }
-                if (std::strncmp("Sets:", str.c_str(), 4) == 0){
-                    //begin
-                    beginParse = true;
-                }
-            }
-            
-            
-            printf ("%s\n", ent->d_name);
-            
-            cout<<"size: "<<mSetList.size()<<endl;
-            
-            HSState newState;
-            newState.InitSetList(mSetList);
-            nmcStatistics(1, 1, newState);
-        }
-        closedir (dir);
-    } else {
-        /* could not open directory */
-        perror ("");
-        return EXIT_FAILURE;
-    }
+//    DIR *dir;
+//    struct dirent *ent;
+//    string dirName = "/Users/shuyi/Documents/CMPUT657/HittingSet/output/";
+//    if ((dir = opendir (dirName.c_str())) != NULL) {
+//        /* print all the files and directories within directory */
+//        while ((ent = readdir (dir)) != NULL) {
+//            
+//            list<set<uint64_t> > mSetList;
+//            
+//            string fileName(ent->d_name);
+//            string dirName = "/Users/shuyi/Documents/CMPUT657/HittingSet/output/";
+//            dirName.append(fileName);
+//            
+//            std::ifstream file(dirName.c_str());
+//            //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/fftbench.idemGA.report.txt");
+//            //    std::ifstream file("/Users/shuyi/Documents/CMPUT657/HittingSet/output/lpbench.idemGA.report.txt");
+//            
+//            std::string str;
+//            bool beginParse = false;
+//            while (std::getline(file, str))
+//            {
+//                if (std::strncmp("===", str.c_str(), 3) == 0){
+//                    break;
+//                }
+//                
+//                if (beginParse){
+//                    
+//                    set<uint64_t> mSet;
+//                    
+//                    stringstream ssin(str);
+//                    while (ssin.good()){
+//                        uint64_t element;
+//                        ssin >> element;
+//                        if (element == 0) break;
+//                        mSet.insert(element);
+//                    }
+//                    
+//                    if (!mSet.empty())
+//                        mSetList.push_back(mSet);
+//                    
+//                }
+//                if (std::strncmp("Sets:", str.c_str(), 4) == 0){
+//                    //begin
+//                    beginParse = true;
+//                }
+//            }
+//            
+//            
+//            printf ("%s\n", ent->d_name);
+//            
+//            cout<<"size: "<<mSetList.size()<<endl;
+//            
+//            HSState newState;
+//            newState.InitSetList(mSetList);
+//            nmcStatistics(1, 1, newState);
+//        }
+//        closedir (dir);
+//    } else {
+//        /* could not open directory */
+//        perror ("");
+//        return EXIT_FAILURE;
+//    }
     
 //    newState.Hit(5);
 //    
